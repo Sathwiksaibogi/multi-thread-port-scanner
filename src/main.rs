@@ -1,5 +1,5 @@
-mod args;
-use args::CliArgs;
+mod configuration;
+use configuration::CliArgs;
 use clap::Parser;
 
 fn main() {
