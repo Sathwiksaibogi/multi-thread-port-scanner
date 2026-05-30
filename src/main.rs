@@ -11,6 +11,16 @@ use std::sync::mpsc;
 fn main() {
     let mut args=CliArgs::parse();
 
+    if args.start_port > args.end_port {
+        eprintln!("start port ({}) cannot be greater than end port ({})",args.start_port,args.end_port);
+        std::process::exit(1);
+    }
+
+    let total_ports=(args.end_port-args.start_port +1 )as u32;
+    if args.threads > total_ports {
+        println!("requested {} threads for {} ports.so, threads reduced to {}",args.threads,total_ports,total_ports);
+        args.threads=total_ports ;
+    }
 
     let (tx,rx)=mpsc::channel();
 
